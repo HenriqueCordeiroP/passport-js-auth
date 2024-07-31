@@ -1,11 +1,17 @@
 const express = require("express");
+const passport = require("passport");
+require("./auth/passport.js");
 
 const app = express();
 app.use(express.json());
 
-const userRouter = require("./users/user.controller");
+const userRouter = require("./users/routes");
+const authRouter = require("./auth/routes");
 
-app.use("/users", userRouter);
+app.use("/api/v1/auth/", authRouter);
+
+// app.use(passport.authenticate("jwt", { session: false }));
+app.use("/api/v1/users/", userRouter);
 
 app.listen(3000);
 console.log("Express App running on http://localhost:3000");
